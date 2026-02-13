@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Hi BABYYYY</title>
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4cfd8;
+  font-family: "Comic Sans MS", cursive;
+  overflow: hidden;
+}
+
+@keyframes float-heart {
+  0% { transform: translateY(0px) rotate(-5deg); }
+  50% { transform: translateY(-18px) rotate(5deg); }
+  100% { transform: translateY(0px) rotate(-5deg); }
+}
+
+.heart {
+  position: absolute;
+  font-size: 22px;
+  opacity: 0.25;
+  pointer-events: none;
+  animation: float-heart 18s ease-in-out infinite;
+  filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.15));
+}
+
+.card {
+  position: relative;
+  z-index: 10;
+  background: white;
+  border: 4px solid black;
+  border-radius: 20px;
+  padding: 30px 40px;
+  text-align: center;
+  box-shadow: 8px 8px 0 black;
+  width: 380px;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px 25px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 3px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 5px;
+  box-shadow: 4px 4px 0 black;
+  transition: 0.15s;
+}
+
+.yes { background: #4CAF50;
+color:white
+ }
+
+.no {
+  background: #f44336;
+  color: white;
+}
+
+/* Button stacking */
+#noBtn {
+   position: relative;
+  z-index: 100;
+  transition: transform 0.3s ease, left 0.4s ease, top 0.4s ease;
+}
+
+#yesBtn {
+  position: relative;
+  z-index: 50;
+}
+
+/* GIF stays inside the card (NOT floating outside) */
+#memeGif {
+  display: none;
+  width: 220px;
+  max-width: 100%;
+  border-radius: 12px;
+  margin: 10px auto 14px;
+  border: 3px solid black;
+  box-shadow: 4px 4px 0 black;
+
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+
+button:hover {
+  transform: translate(2px,2px);
+  box-shadow: 2px 2px 0 black;
+}
+
+/* Overlay blur + dim */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.hidden { display: none; }
+
+/* Success card style */
+.success-card {
+  width: 360px;
+  background: white;
+  border: 4px solid black;
+  border-radius: 18px;
+  padding: 20px 22px;
+  text-align: center;
+  box-shadow: 10px 10px 0 black;
+  transform: scale(0.95);
+  animation: popIn 220ms ease forwards;
+}
+
+.success-card img {
+  width: 240px;
+  max-width: 100%;
+  border-radius: 12px;
+  border: 3px solid black;
+  box-shadow: 4px 4px 0 black;
+  margin-bottom: 12px;
+}
+
+.success-card h2 {
+  margin: 10px 0 6px;
+  font-size: 24px;
+}
+
+.success-card p {
+  margin: 0 0 14px;
+  font-size: 14px;
+}
+
+@keyframes popIn {
+  to { transform: scale(1); }
+}
+
+/* Confetti pieces */
+.confetti {
+  position: fixed;
+  top: -10px;
+  width: 10px;
+  height: 14px;
+  border-radius: 3px;
+  z-index: 10000;
+  animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0.9;
+  }
+}
+
+.final-card {
+  width: 520px;
+  max-width: calc(100vw - 40px);
+  background: white;
+  border: 4px solid black;
+  border-radius: 18px;
+  padding: 24px 26px;
+  text-align: center;
+  box-shadow: 10px 10px 0 black;
+  animation: popIn 220ms ease forwards;
+}
+
+.final-title {
+  font-size: 26px;
+  margin: 4px 0 10px;
+  line-height: 1.2;
+}
+
+.final-subtitle {
+  font-size: 14px;
+  margin: 0 0 18px;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.photo-box {
+  border: 4px solid black;
+  border-radius: 14px;
+  box-shadow: 6px 6px 0 black;
+  overflow: hidden;
+  background: #fff;
+}
+
+.photo-box img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+}
+
+.special-title {
+  margin: 10px 0 8px;
+  font-size: 18px;
+}
+
+.special-text {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" autoplay loop>
+  <source src="love.mp3" type="audio/mpeg">
+</audio>
+
+<span class="heart" style="left:10%; top:20%;">❤️</span>
+<span class="heart" style="left:70%; top:30%; animation-duration:20s;">❤️</span>
+<span class="heart" style="left:40%; top:80%; animation-duration:16s;">❤️</span>
+<span class="heart" style="left:85%; top:60%; animation-duration:22s;">❤️</span>
+
+<div class="card">
+    <img id="memeGif" src="1.gif" alt="funny gif">
+
+  <h1>WILL YOU BE MY VALENTINE?</h1>
+
+<button id="yesBtn" class="yes">Yes</button>
+<button id="noBtn" class="no">No</button>
+
+<p id="attempts">Attempts: 0</p>
+
+
+<div id="subtitleText" class="subtitle">Try clicking No... if you dare 😏</div>
+
+<!-- Success Overlay (hidden by default) -->
+<div id="successOverlay" class="overlay hidden">
+  <div class="success-card">
+    <img id="successImg" src="yes.gif" alt="yay gif" />
+    <h2>I knew you would say yes!</h2>
+    <p>You can't resist this, baby :p !</p>
+    <button id="proceedBtn" class="yes">Proceed 💘</button>
+  </div>
+</div>
+<!-- Final Screen (hidden by default) -->
+<div id="finalScreen" class="overlay hidden">
+  <div class="final-card">
+    <h2 class="final-title">Thank you for saying YES 💖<br/>Happy Valentine's Day!</h2>
+    <p class="final-subtitle">Here are some of my favorite pictures 📸</p>
+
+    <div class="photo-grid">
+      <div class="photo-box">
+        <img src="pic1.jpeg" alt="pic 1">
+      </div>
+      <div class="photo-box">
+        <img src="pic2.jpeg" alt="pic 2">
+      </div>
+    </div>
+
+    <h3 class="special-title">💌 Special Message to you:</h3>
+    <p class="special-text">
+      You are the love of my life, and I'm so grateful to have open Tiktok that day and
+      decided to join your stream, play games with you, spending time with you because
+      every moment with you is a treasure I hold close to my heart. Thank you baby for being my Valentine today and always! 💖
+    </p>
+    <h3 class="special-title">❤️ Love Iman</h3>
+  </div>
+</div>
+
+<script>
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤️";
+
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.top = Math.random() * 100 + "vh"; // optional: spread around
+  heart.style.animationDuration = (14 + Math.random() * 10) + "s";
+  heart.style.animationDelay = (Math.random() * 3) + "s";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 20000);
+}
+setInterval(createHeart, 500);
+
+const card = document.querySelector(".card");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const successOverlay = document.getElementById("successOverlay");
+const proceedBtn = document.getElementById("proceedBtn");
+const memeGif = document.getElementById("memeGif");
+const attemptsText = document.getElementById("attempts");
+const subtitleText = document.getElementById("subtitleText");
+const finalScreen = document.getElementById("finalScreen");
+const closeFinalBtn = document.getElementById("closeFinalBtn");
+const bgMusic = document.getElementById("bgMusic");
+
+
+/* ---------- GIF list ---------- */
+const gifs = [
+  "1.gif",
+  "2.gif",
+  "3.gif",
+  "4.gif",
+  "5.gif",
+];
+
+const texts = [
+  "really?? 😐",
+  "are you serious?? 😭",
+  "bro... stop pressing no",
+  "this is getting personal 😤",
+  "you think this is funny huh 😈",
+  "okay now I'm judging you",
+  "please baby stop..",
+  "you really don't wanna say yes??",
+  "so you hate me now??",
+  "do you not love me enough to say yes??",
+  "baby pleaseeeeeeeeeeeeeee",
+  "last chance… 😭",
+  "please sayyyy yesssssssssss",
+  "BABYYYY!!!",
+  "Okay I'm running out of ideas now",
+  "Are you still clicking no?",
+  "Damn...",
+  "There's nothing to see here",
+  "You're so stuborn huh?",
+  "you know the yes is getting bigger right?",
+  "i think the yes is broken now. thanks to you",
+  "you're still clicking no?",
+  "what if I remove the no button?",
+  "YO STOP pressing no QwQ",
+  "do you not have better things to do??",
+  "damn I guess I can't stop you now",
+  "goodluck baby cuz I can do this all day",
+  "like it's not that hard to code (as i'm struggling internally rn doing this)",
+  "like it's so easy i can keep going",
+  "until you press 'yes' i will not stop",
+  "i think you gonna run out of screen soon"
+];
+
+/* Preload GIFs to reduce flicker */
+gifs.forEach((src) => {
+  const img = new Image();
+  img.src = src;
+});
+
+let attempts = 0;
+let size = 18;
+let rotation = 0;
+
+noBtn.addEventListener("click", () => {
+  attempts++;
+  attemptsText.textContent = "Attempts: " + attempts;
+  subtitleText.textContent = texts[(attempts - 1) % texts.length];
+
+  memeGif.style.display = "block";
+
+  // Grow YES button
+  size += 10;
+  yesBtn.style.fontSize = size + "px";
+
+  // Make NO button escape the card
+  noBtn.style.position = "fixed";
+
+  // Random screen position
+  const padding = 40;
+
+  const randomX =
+    padding + Math.random() * (window.innerWidth - noBtn.offsetWidth - padding * 2);
+
+  const randomY =
+    padding + Math.random() * (window.innerHeight - noBtn.offsetHeight - padding * 2);
+
+  noBtn.style.left = randomX + "px";
+  noBtn.style.top = randomY + "px";
+
+  // Increase silly rotation each click
+  rotation += 180 + Math.random() * 360;
+
+  noBtn.style.transform = `rotate(${rotation}deg) scale(1.1)`;
+  
+  const nextGif = gifs[(attempts - 1) % gifs.length];
+  memeGif.style.opacity = "0";
+  setTimeout(() => {
+    memeGif.src = nextGif;
+    memeGif.style.display = "block";
+    memeGif.style.opacity = "1";
+  }, 220);
+});
+
+function launchConfetti(count = 120) {
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement("div");
+    piece.className = "confetti";
+
+    // random position
+    piece.style.left = Math.random() * 100 + "vw";
+
+    // random size
+    const w = 6 + Math.random() * 8;
+    const h = 8 + Math.random() * 12;
+    piece.style.width = w + "px";
+    piece.style.height = h + "px";
+
+    // random color
+    piece.style.background = `hsl(${Math.random() * 360}, 90%, 60%)`;
+
+    // random duration
+    const duration = 2 + Math.random() * 2.5;
+    piece.style.animationDuration = duration + "s";
+
+    // random delay
+    piece.style.animationDelay = (Math.random() * 0.2) + "s";
+
+    document.body.appendChild(piece);
+
+    // cleanup
+    setTimeout(() => piece.remove(), (duration + 0.5) * 1000);
+  }
+}
+
+yesBtn.addEventListener("click", () => {
+  // show overlay
+  successOverlay.classList.remove("hidden");
+  bgMusic.play();
+
+  // confetti burst
+  launchConfetti(160);
+
+  // optional: disable buttons
+  noBtn.disabled = true;
+  yesBtn.disabled = true;
+});
+
+proceedBtn.addEventListener("click", () => {
+  // Hide the success overlay
+  successOverlay.classList.add("hidden");
+
+  // Show the final screen
+  finalScreen.classList.remove("hidden");
+});
+</script>
+
+</body>
+</html>
